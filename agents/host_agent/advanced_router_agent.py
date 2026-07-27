@@ -1,5 +1,5 @@
 """
-BONUS Part A: Advanced Router Agent with Dynamic Routing (+10 points)
+BONUS Part A: Advanced Router Agent with Dynamic Routing (+15 points)
 
 This is an OPTIONAL bonus implementation that adds intelligent routing:
   - Analyzes query intent to determine which agents to invoke
@@ -14,10 +14,10 @@ Architecture:
          -> RemoteA2aAgent("support_specialist") with before_agent_callback
 
 Requirements for bonus points:
-  - analyze_query_intent function works correctly (3 pts)
-  - Callback functions properly skip/run agents (3 pts)
-  - Router agent with dynamic instruction (2 pts)
-  - Full orchestrator assembled correctly (2 pts)
+  - analyze_query_intent function works correctly (5 pts)
+  - Callback functions properly skip/run agents (4 pts)
+  - Router agent with dynamic instruction (3 pts)
+  - Full orchestrator assembled correctly (3 pts)
 """
 
 import sys
@@ -121,7 +121,10 @@ def create_router_instruction(readonly_context) -> str:
     TODO: Implement this function to:
       1. Get the user's query from readonly_context.latest_user_message
       2. Call analyze_query_intent(query)
-      3. Store routing_decision in readonly_context.state
+      3. Store routing_decision in session state. NOTE: an instruction provider receives a
+         ReadonlyContext, whose .state is a read-only view — assigning to it does not reliably
+         persist. Compute and store the decision in a before_agent_callback on the router agent
+         (which receives a writable CallbackContext); this function can then read it back.
       4. Return a dynamic instruction string based on the analysis
     """
     raise NotImplementedError("BONUS TODO: Implement create_router_instruction")

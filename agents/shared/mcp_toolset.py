@@ -66,11 +66,12 @@ def create_full_toolset() -> McpToolset:
 # Create a toolset for the Customer Data Agent with tool_filter selecting
 # data-access and management tools.
 #
-# The customer data agent needs tools for:
+# The customer data agent is the trusted back-office role and gets FULL access:
+# list all 15 tools explicitly (see README "Tools to Include: All 15 tools").
 #   - Looking up customers (get_customer, list_customers)
 #   - Managing customer records (add_customer, update_customer)
 #   - Ticket operations (get_ticket, list_tickets, create_ticket,
-#     update_ticket_status, update_ticket_priority)
+#     update_ticket_status, update_ticket_priority, delete_ticket)
 #   - Statistics and search (get_ticket_stats, get_customer_stats, search_tickets)
 #   - Admin operations (disable_customer, activate_customer)
 #
