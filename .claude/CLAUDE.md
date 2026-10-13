@@ -6,11 +6,11 @@ Assignment 4 starter kit for UCLA Extension's Agentic AI course. Students build 
 
 ## Tech Stack
 
-- **Python**: 3.11+
-- **Agent Framework**: Google ADK 1.9.0
-- **AI Models**: Gemini 2.5 Flash (google-genai)
-- **Agent Protocol**: A2A SDK 0.3.0
-- **MCP Server**: MCP Python SDK / FastMCP (provided, SSE transport)
+- **Python**: 3.11 or 3.12
+- **Agent Framework**: Google ADK 2.x (`google-adk>=2.11.0,<3`)
+- **AI Models**: Gemini via `GEMINI_MODEL` (default `gemini-3.8-flash`, google-genai)
+- **Agent Protocol**: A2A SDK 0.3.x (`a2a-sdk>=0.3.4,<1.0`). Do NOT upgrade to a2a-sdk 1.x: it removes `TransportProtocol`, `a2a.server.apps`, `create_text_message_object` and `AgentCard.url`, which the starter code and tests use.
+- **MCP Server**: MCP Python SDK 1.x / FastMCP (`mcp>=1.24,<2`; mcp 2.x removes `mcp.server.fastmcp`) (provided, SSE transport)
 - **MCP Integration**: Google ADK McpToolset (auto-discovers tools via SSE)
 - **Database**: SQLite3 (provided)
 - **Communication**: JSON-RPC 2.0, A2A Protocol

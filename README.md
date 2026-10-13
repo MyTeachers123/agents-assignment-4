@@ -154,6 +154,7 @@ Define `AgentCard` for each agent:
 - `create_support_agent_card()` - with troubleshooting skills
 - `create_host_agent_card()` - with orchestration skills
 - Each card must have: name, url, description, skills with examples
+- `AgentCard` also requires `version`, `capabilities`, `default_input_modes` and `default_output_modes` (omitting them raises a pydantic ValidationError); see the docstrings in `create_agents.py`
 
 ### 4. A2A Integration (10 pts)
 
@@ -201,9 +202,9 @@ File: `agents/host_agent/parallel_router_agent.py`
 Implement parallel execution with:
 - `ParallelAgent` to run both sub-agents simultaneously
 - Response synthesis agent to combine results
-- Output stored in agent state via `output_key`
+- Output stored in agent state via an `after_agent_callback` on each `RemoteA2aAgent` (`RemoteA2aAgent` has no `output_key` field)
 
-Switch modes via `HOST_AGENT_MODE` in `.env`:
+Switch modes via `HOST_AGENT_MODE` in `.env` (applies to `adk web host_agent`; `python run_agents.py` always serves the basic `host_agent/agent.py` on port 10022):
 ```bash
 HOST_AGENT_MODE=basic      # Sequential (default)
 HOST_AGENT_MODE=advanced   # Dynamic routing (bonus)
@@ -281,8 +282,8 @@ cd ..
 cd mcp_server
 pip install -r requirements.txt
 python app.py
-# Server runs on http://localhost:8080
-cd ..
+# Server runs on http://localhost:8080 and blocks this terminal.
+# Leave it running and open a new terminal (at the repo root) for step 4.
 ```
 
 ### 4. Start Agent System
@@ -318,6 +319,7 @@ python -m tests.test_a2a
 
 ```bash
 cd agents
+# Run one at a time: each command serves the web UI on port 8000 and blocks the terminal
 adk web customer_data_agent
 adk web support_agent
 adk web host_agent
@@ -368,9 +370,8 @@ This assignment uses **GitHub Classroom**. Your work is submitted by pushing to 
 
 ### How Grading Works
 
-- When you push to `main`, the autograder automatically creates a **Pull Request** with your grading results
-- Check the **Pull Requests** tab on your GitHub repository to see your score and feedback
-- You can push multiple times before the deadline; each push triggers a new grading run
+- Your score and feedback are posted in Canvas. Nothing creates a Pull Request on your repository, so you will not find results in the **Pull Requests** tab
+- You can push multiple times before the deadline
 
 ### Important
 

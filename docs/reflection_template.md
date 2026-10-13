@@ -6,9 +6,9 @@
 
 ## Part 1: MCP Tools + Customer Data Agent
 
-### Tool Design Decisions
-- Which MCP tools did you implement and why?
-- How did you design the tool signatures for ADK compatibility?
+### Toolset Design Decisions
+- Which MCP tools did you include in each `tool_filter`, and why?
+- How does the support toolset's filter limit what the support agent can do?
 
 ### Data Agent Instruction
 - What capabilities did you include in the system instruction?
@@ -20,7 +20,7 @@
 
 ### Support Agent Design
 - What knowledge did you embed in the support agent's instruction?
-- How does it handle queries without external tools?
+- How does it combine its knowledge base with its filtered MCP toolset?
 
 ### Host Agent Orchestration
 - How does the SequentialAgent coordinate between sub-agents?
@@ -56,6 +56,8 @@
 - What synthesis strategy did you use to combine results?
 
 ### Mode Comparison
+
+Report measured wall-clock latency (seconds) for the same query in each mode, and how you measured it.
 
 | Mode | Agents Called | Latency | Context Passing |
 |------|-------------|---------|-----------------|
