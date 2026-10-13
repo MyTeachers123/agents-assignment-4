@@ -261,8 +261,9 @@ class DatabaseSetup:
 def main():
     """Main function to setup the database."""
 
-    # Initialize database
-    db = DatabaseSetup("support.db")
+    # Initialize database next to this script (database/support.db), which is
+    # where mcp_server/config.py looks, regardless of the current directory
+    db = DatabaseSetup(str(Path(__file__).resolve().parent / "support.db"))
 
     try:
         # Connect to database
