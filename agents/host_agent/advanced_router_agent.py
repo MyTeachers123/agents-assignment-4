@@ -119,7 +119,8 @@ def create_router_instruction(readonly_context) -> str:
     Dynamic instruction for router agent based on query analysis.
 
     TODO: Implement this function to:
-      1. Get the user's query from readonly_context.latest_user_message
+      1. Get the user's query from readonly_context.user_content (a types.Content;
+         the text is in readonly_context.user_content.parts[0].text)
       2. Call analyze_query_intent(query)
       3. Store routing_decision in session state. NOTE: an instruction provider receives a
          ReadonlyContext, whose .state is a read-only view — assigning to it does not reliably
