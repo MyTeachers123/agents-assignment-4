@@ -75,11 +75,10 @@ def check_customer_data_toolset():
         return False
     print("  [PASS] Returns McpToolset instance")
 
-    # Check tool_filter
-    tool_filter = getattr(toolset, '_tool_filter', None)
+    # Check tool_filter (google-adk 2.x stores it as the public `tool_filter`)
+    tool_filter = getattr(toolset, 'tool_filter', getattr(toolset, '_tool_filter', None))
     if tool_filter is None:
-        # McpToolset may store it differently — check connection params
-        print("  [WARN] Cannot inspect tool_filter (internal attribute)")
+        print("  [PASS] No tool_filter: all 15 MCP tools exposed (full access)")
     elif isinstance(tool_filter, list):
         if len(tool_filter) == 0:
             print("  [FAIL] tool_filter is empty")
@@ -126,10 +125,11 @@ def check_support_toolset():
         return False
     print("  [PASS] Returns McpToolset instance")
 
-    # Check tool_filter
-    tool_filter = getattr(toolset, '_tool_filter', None)
+    # Check tool_filter (google-adk 2.x stores it as the public `tool_filter`)
+    tool_filter = getattr(toolset, 'tool_filter', getattr(toolset, '_tool_filter', None))
     if tool_filter is None:
-        print("  [WARN] Cannot inspect tool_filter (internal attribute)")
+        print("  [FAIL] Support toolset has no tool_filter (admin tools would be exposed)")
+        return False
     elif isinstance(tool_filter, list):
         if len(tool_filter) == 0:
             print("  [FAIL] tool_filter is empty")
@@ -201,6 +201,8 @@ def main():
     else:
         print(f"\n[WARN] {total - passed} check(s) failed. Review above.")
 
+    return passed == total
+
 
 # Support running as pytest
 class TestMcpToolset:
@@ -231,6 +233,24 @@ class TestMcpToolset:
         toolset = create_support_toolset()
         assert isinstance(toolset, McpToolset)
 
+    def test_support_toolset_filter(self):
+        """Support toolset must have a tool_filter that excludes admin tools."""
+        from shared.mcp_toolset import create_support_toolset
+        toolset = create_support_toolset()
+        tool_filter = getattr(toolset, 'tool_filter', getattr(toolset, '_tool_filter', None))
+        assert isinstance(tool_filter, list) and tool_filter, "support toolset needs a non-empty tool_filter list"
+        assert not [t for t in ADMIN_TOOLS if t in tool_filter], "admin tools must be excluded"
+        assert not [t for t in tool_filter if t not in ALL_MCP_TOOL_NAMES], "unknown tool names"
+
+    def test_customer_data_toolset_filter(self):
+        """Customer data toolset: no filter (all tools) or a list of valid tool names."""
+        from shared.mcp_toolset import create_customer_data_toolset
+        toolset = create_customer_data_toolset()
+        tool_filter = getattr(toolset, 'tool_filter', getattr(toolset, '_tool_filter', None))
+        if tool_filter is not None:
+            assert isinstance(tool_filter, list) and tool_filter
+            assert not [t for t in tool_filter if t not in ALL_MCP_TOOL_NAMES], "unknown tool names"
+
     def test_full_toolset_reference(self):
         """Full toolset (reference) should return McpToolset."""
         from shared.mcp_toolset import create_full_toolset
@@ -240,4 +260,4 @@ class TestMcpToolset:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(0 if main() else 1)

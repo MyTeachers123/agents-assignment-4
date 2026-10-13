@@ -245,6 +245,8 @@ def main():
     else:
         print(f"\n[WARN] {total - passed} check(s) failed. Review above.")
 
+    return passed == total
+
 
 # Support running as pytest
 class TestAgents:
@@ -294,4 +296,4 @@ class TestAgents:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(0 if main() else 1)

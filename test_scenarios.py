@@ -14,6 +14,7 @@ This script runs from the project root directory.
 import asyncio
 import logging
 import os
+import re
 import sys
 
 # Add agents directory to Python path
@@ -56,15 +57,15 @@ async def test_scenario(scenario_name: str, query: str, expected_capabilities: l
         print(response)
         print("-"*80)
 
-        # Verify response quality
+        # Verify response quality (whole-word match: 'id' must not match 'provided')
         print("\nVERIFICATION:")
-        if len(response) > 50:
-            print("  [PASS] Response has substantial content")
-        if any(word in response.lower() for word in ['customer', 'ticket', 'id']):
-            print("  [PASS] Response contains relevant keywords")
+        substantial = len(response) > 50
+        relevant = re.search(r"\b(customers?|tickets?|id)\b", response.lower()) is not None
+        print(f"  [{'PASS' if substantial else 'FAIL'}] Response has substantial content")
+        print(f"  [{'PASS' if relevant else 'FAIL'}] Response contains relevant keywords")
 
         print("\n" + "="*80)
-        return True
+        return substantial and relevant
 
     except Exception as e:
         print(f"\n[FAIL] ERROR: {str(e)}")
@@ -118,7 +119,7 @@ async def run_all_tests():
     # ========================================================================
     results.append(await test_scenario(
         scenario_name="Coordinated Query - Multi-Agent Collaboration",
-        query="I'm customer 2 (Sarah Johnson) and I need help checking my ticket status and getting support",
+        query="I'm customer 2 (Jane Smith) and I need help checking my ticket status and getting support",
         expected_capabilities=[
             "Customer Data Agent fetches customer info",
             "Customer Data Agent retrieves ticket history",
@@ -172,7 +173,7 @@ async def run_all_tests():
         expected_capabilities=[
             "Detects urgency keywords (URGENT, immediately)",
             "Identifies billing issue type",
-            "Fetches customer transaction history",
+            "Fetches customer record and existing tickets (no transaction data exists)",
             "Creates high-priority ticket",
             "Provides immediate escalation path",
             "Shows ticket ID for tracking"
@@ -264,6 +265,7 @@ async def run_all_tests():
         print(f"\n[WARN] {total - passed} test(s) failed. Review logs above.")
 
     print("\n" + "="*80 + "\n")
+    return passed == total
 
 
 async def verify_agent_availability():
@@ -311,11 +313,11 @@ async def main():
     """Main test execution."""
     # Verify agents are running
     if not await verify_agent_availability():
-        return
+        return False
 
     # Run all test scenarios
-    await run_all_tests()
+    return await run_all_tests()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    sys.exit(0 if asyncio.run(main()) else 1)

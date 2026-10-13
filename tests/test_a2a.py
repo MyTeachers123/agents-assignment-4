@@ -270,6 +270,8 @@ def main():
     else:
         print(f"\n[WARN] {total - passed} check(s) failed. Review above.")
 
+    return passed == total
+
 
 # Support running as pytest
 class TestA2A:
@@ -302,6 +304,18 @@ class TestA2A:
         assert 'RemoteA2aAgent' in source
         assert 'SequentialAgent' in source
 
+    def test_agent_cards(self):
+        """All three AgentCards build with name, url, description and skills with examples."""
+        from create_agents import (
+            create_customer_data_agent_card,
+            create_support_agent_card,
+            create_host_agent_card,
+        )
+        for fn in (create_customer_data_agent_card, create_support_agent_card, create_host_agent_card):
+            card = fn()
+            assert card.name and card.url and card.description and card.skills, fn.__name__
+            assert all(skill.examples for skill in card.skills), fn.__name__
+
     def test_create_all_agents_importable(self):
         """create_all_agents should be importable."""
         from create_agents import create_all_agents
@@ -309,4 +323,4 @@ class TestA2A:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(0 if main() else 1)
