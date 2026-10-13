@@ -1,2 +1,2 @@
-# MCP Server dependencies
-mcp>=1.6.0
+# MCP Server dependencies (mcp 2.x removed mcp.server.fastmcp)
+mcp>=1.24,<2
