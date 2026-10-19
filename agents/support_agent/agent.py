@@ -1,5 +1,5 @@
 """
-Part 2b: Support Agent (15 points)
+Part 2: Support Agent (10 points)
 
 Create an ADK Agent that provides customer support solutions and troubleshooting.
 
@@ -13,9 +13,9 @@ tool_filter to exclude admin/destructive operations (disable_customer, delete_ti
 etc.) so the support agent can only perform safe operations.
 
 Requirements:
-  - create_agent() returns a configured google.adk.agents.Agent (5 pts)
-  - Agent has a comprehensive instruction with support knowledge base (5 pts)
-  - Agent uses create_support_toolset() for data-driven support (5 pts)
+  - create_agent() returns a configured google.adk.agents.Agent
+  - Agent has a comprehensive instruction with support knowledge base
+  - Agent uses create_support_toolset() for data-driven support
 
 The support agent's instruction should include a "knowledge base" covering:
   - Login issues (password resets, account lockouts)

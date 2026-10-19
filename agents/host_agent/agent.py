@@ -1,5 +1,5 @@
 """
-Part 3: Host Agent / Orchestrator (20 points)
+Part 2: Host Agent / Orchestrator (10 points)
 
 Create a SequentialAgent that coordinates between Customer Data Agent and Support Agent
 using the A2A (Agent-to-Agent) protocol.
@@ -11,11 +11,12 @@ Architecture:
     -> RemoteA2aAgent("customer_data") -- calls Customer Data Agent via A2A
     -> RemoteA2aAgent("support_specialist") -- calls Support Agent via A2A
 
-Requirements:
-  - Import and apply the A2A compatibility patch (CRITICAL) (2 pts)
-  - Create RemoteA2aAgent for Customer Data Agent (6 pts)
-  - Create RemoteA2aAgent for Support Agent (6 pts)
-  - Create SequentialAgent combining both remote agents (6 pts)
+Requirements (README.md Part 2 "A2A Integration" also grades the
+RemoteA2aAgent wiring in this file; see its Evaluation Rubric for the points):
+  - Import and apply the A2A compatibility patch (CRITICAL)
+  - Create RemoteA2aAgent for Customer Data Agent
+  - Create RemoteA2aAgent for Support Agent
+  - Create SequentialAgent combining both remote agents
 
 Key concepts:
   - RemoteA2aAgent wraps a remote agent as a local sub-agent

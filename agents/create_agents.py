@@ -1,5 +1,5 @@
 """
-Part 4: Agent Factory and AgentCard Definitions (20 points)
+Part 2: Agent Factory and AgentCard Definitions (Agent Cards, 10 points)
 
 Create AgentCards for A2A discovery and a factory function to create all agents.
 
@@ -7,10 +7,10 @@ AgentCards are the A2A protocol's way of advertising agent capabilities.
 They include metadata like name, URL, description, skills, and examples.
 
 Requirements:
-  - create_customer_data_agent_card() returns valid AgentCard (5 pts)
-  - create_support_agent_card() returns valid AgentCard (5 pts)
-  - create_host_agent_card() returns valid AgentCard (5 pts)
-  - create_all_agents() returns dict with all agents and cards (5 pts)
+  - create_customer_data_agent_card() returns valid AgentCard
+  - create_support_agent_card() returns valid AgentCard
+  - create_host_agent_card() returns valid AgentCard
+  - create_all_agents() returns dict with all agents and cards
 
 Each AgentCard needs:
   - name: Human-readable agent name
@@ -43,7 +43,7 @@ from host_agent.agent import create_agent as create_host_agent
 
 
 # =============================================================================
-# TODO 1: Customer Data Agent Card (5 pts)
+# TODO 1: Customer Data Agent Card
 # =============================================================================
 
 def create_customer_data_agent_card() -> AgentCard:
@@ -81,7 +81,7 @@ def create_customer_data_agent_card() -> AgentCard:
 
 
 # =============================================================================
-# TODO 2: Support Agent Card (5 pts)
+# TODO 2: Support Agent Card
 # =============================================================================
 
 def create_support_agent_card() -> AgentCard:
@@ -119,7 +119,7 @@ def create_support_agent_card() -> AgentCard:
 
 
 # =============================================================================
-# TODO 3: Host Agent Card (5 pts)
+# TODO 3: Host Agent Card
 # =============================================================================
 
 def create_host_agent_card() -> AgentCard:
@@ -156,7 +156,7 @@ def create_host_agent_card() -> AgentCard:
 
 
 # =============================================================================
-# TODO 4: Factory Function (5 pts)
+# TODO 4: Factory Function
 # =============================================================================
 
 def create_all_agents():

@@ -1,5 +1,5 @@
 """
-Part 1: McpToolset Configuration for Google ADK Agents (20 points)
+Part 1: McpToolset Configuration for Google ADK Agents (15 points)
 
 Google ADK's McpToolset auto-discovers all tools from an MCP server and makes them
 available to ADK agents — no manual wrapper functions needed. Your job is to configure
@@ -21,11 +21,11 @@ Requirements for each toolset:
   - Customer data toolset: broad data access (lookup, list, create, update, stats)
   - Support toolset: support-safe tools only (exclude admin ops like disable/delete)
 
-Grading (20 points):
-  - Both toolsets return McpToolset instances: 5 pts
-  - tool_filter lists are correct and non-empty: 5 pts
-  - Customer data toolset includes core tools: 5 pts
-  - Support toolset excludes admin/destructive tools: 5 pts
+Grading (15 points; README.md has the authoritative breakdown):
+  - Both toolsets return McpToolset instances
+  - tool_filter lists are correct and non-empty
+  - Customer data toolset includes core tools
+  - Support toolset excludes admin/destructive tools
 """
 
 import os
@@ -61,7 +61,7 @@ def create_full_toolset() -> McpToolset:
 
 
 # =============================================================================
-# TODO 1: Customer Data Toolset (10 pts)
+# TODO 1: Customer Data Toolset
 # =============================================================================
 # Create a toolset for the Customer Data Agent with tool_filter selecting
 # data-access and management tools.
@@ -97,7 +97,7 @@ def create_customer_data_toolset() -> McpToolset:
 
 
 # =============================================================================
-# TODO 2: Support Toolset (10 pts)
+# TODO 2: Support Toolset
 # =============================================================================
 # Create a toolset for the Support Agent with tool_filter selecting only
 # support-appropriate tools. The support agent should NOT have access to

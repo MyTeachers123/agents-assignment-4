@@ -1,5 +1,5 @@
 """
-Part 2a: Customer Data Agent (15 points)
+Part 1: Customer Data Agent (10 points)
 
 Create an ADK Agent that manages customer and ticket data via McpToolset.
 
@@ -11,10 +11,11 @@ This agent should:
 The McpToolset auto-discovers tools from the MCP server — no manual wrappers needed.
 You configure which tools the agent can access via the tool_filter in the toolset.
 
-Requirements:
-  - create_agent() returns a configured google.adk.agents.Agent (5 pts)
-  - Agent has a detailed instruction string (5 pts)
-  - Agent uses create_customer_data_toolset() (5 pts)
+Requirements (README.md Part 1 also grades this agent's instruction quality
+and error handling; see its Evaluation Rubric for the points):
+  - create_agent() returns a configured google.adk.agents.Agent
+  - Agent has a detailed instruction string
+  - Agent uses create_customer_data_toolset()
 
 Example instruction topics to cover:
   - The agent's role (Customer Data specialist)
