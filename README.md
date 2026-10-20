@@ -347,7 +347,7 @@ adk web host_agent
 
 ## Submission
 
-This assignment uses **GitHub Classroom**. Your work is submitted by pushing to your repository's `main` branch.
+Work in your fork of this repository. Your work is submitted by pushing to your fork's `main` branch and submitting the repository link on **Canvas**.
 
 ### Steps
 
@@ -366,12 +366,14 @@ This assignment uses **GitHub Classroom**. Your work is submitted by pushing to 
    git commit -m "Submit assignment 4"
    git push origin main
    ```
-6. Verify your submission on GitHub — go to your repository page and confirm all files are present
+6. Verify your submission on GitHub: go to your repository page and confirm all files are present
+7. Submit your repository link on Canvas (Assignment 4)
 
 ### How Grading Works
 
 - Your score and feedback are posted in Canvas. Nothing creates a Pull Request on your repository, so you will not find results in the **Pull Requests** tab
-- You can push multiple times before the deadline
+- The commit on `main` at the time you submit on Canvas is the one that is graded. Pushes after you submit are not graded unless you resubmit on Canvas
+- After your grade is posted, you get **one update**: push your changes and resubmit the link on Canvas, any time until **Nov 4, 11:59 PM PT**. The resubmitted version is regraded with no late penalty, and that grade is final
 
 ### Important
 
