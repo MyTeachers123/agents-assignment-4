@@ -375,7 +375,7 @@ Work in your fork of this repository. Your work is submitted by pushing to your 
 
 - Your score and feedback are posted in Canvas. Nothing creates a Pull Request on your repository, so you will not find results in the **Pull Requests** tab
 - The commit on `main` at the time you submit on Canvas is the one that is graded. Pushes after you submit are not graded unless you resubmit on Canvas
-- After your grade is posted, you get **one update**: push your changes and resubmit the link on Canvas, any time until **Nov 4, 11:59 PM PT**. The resubmitted version is regraded with no late penalty, and that grade is final
+- After you submit, you get **one update**: push your changes and resubmit the link on Canvas, any time until **Nov 4, 11:59 PM PT**. The resubmitted version is regraded with no late penalty, and that grade is final
 
 ### Important
 
