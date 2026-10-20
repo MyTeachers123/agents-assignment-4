@@ -100,22 +100,21 @@ Configure **two toolset factory functions** that return `McpToolset` instances w
 - `tool_filter` lists contain valid MCP tool names
 - Support toolset excludes destructive/admin tools
 
-### 2. Customer Data Agent (10 pts)
+### 2. Customer Data Agent Instruction (10 pts)
 
 File: `agents/customer_data_agent/agent.py`
 
 Create an ADK `Agent` with:
 - Gemini model from config
-- System instruction describing capabilities (>100 chars)
+- System instruction describing the agent's role and capabilities (>100 chars)
 - `tools=[create_customer_data_toolset()]`
 
-### 3. Agent Instruction Quality (10 pts)
+### 3. McpToolset Integration with Agent (10 pts)
 
-- Agent instruction should describe the agent's role and available capabilities
+- The customer data toolset is wired into the agent (`tools=[create_customer_data_toolset()]`), so the agent discovers and uses the MCP tools
 - Instruction should guide the LLM on how to use the auto-discovered tools
-- Clear, detailed instructions improve agent performance
 
-### 4. Error Handling (5 pts)
+### 4. Error Handling and Instruction Quality (5 pts)
 
 - McpToolset handles MCP errors automatically
 - Agent instruction should guide graceful error communication to users
@@ -294,9 +293,10 @@ pip install -r agents/requirements.txt
 
 # Start all agents
 python run_agents.py --mode start
-# Agents on ports 10020, 10021, 10022
+# Agents on ports 10020, 10021, 10022. This also blocks the terminal: leave it running.
 
-# Or run test scenarios
+# Run the test scenarios in a third terminal at the repo root
+# (needs the MCP server and the agents above running)
 python test_scenarios.py
 ```
 
@@ -306,16 +306,18 @@ python test_scenarios.py
 # Part 1: McpToolset configuration
 python -m tests.test_mcp_toolset
 
-# Part 2: Agent structure
+# Parts 1 and 2: Agent structure
 python -m tests.test_agents
 
-# Part 3: A2A integration
+# Part 2: Agent Cards and A2A integration
 python -m tests.test_a2a
 ```
 
 ---
 
 ## Testing with ADK Web UI
+
+The MCP server (step 3) must be running. `adk web host_agent` also needs `python run_agents.py --mode start` running, because the host agent calls the other two agents over A2A.
 
 ```bash
 cd agents

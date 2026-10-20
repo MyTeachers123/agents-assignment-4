@@ -11,8 +11,8 @@ This agent should:
 The McpToolset auto-discovers tools from the MCP server — no manual wrappers needed.
 You configure which tools the agent can access via the tool_filter in the toolset.
 
-Requirements (README.md Part 1 also grades this agent's instruction quality
-and error handling; see its Evaluation Rubric for the points):
+Requirements (README.md Part 1 also grades this agent's McpToolset integration,
+error handling and instruction quality; see its Evaluation Rubric for the points):
   - create_agent() returns a configured google.adk.agents.Agent
   - Agent has a detailed instruction string
   - Agent uses create_customer_data_toolset()
