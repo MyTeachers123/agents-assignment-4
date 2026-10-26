@@ -61,25 +61,8 @@ def create_full_toolset() -> McpToolset:
 
 
 # =============================================================================
-# TODO 1: Customer Data Toolset
+# Customer Data Toolset (full access: all 15 tools)
 # =============================================================================
-# Create a toolset for the Customer Data Agent with tool_filter selecting
-# data-access and management tools.
-#
-# The customer data agent is the trusted back-office role and gets FULL access:
-# list all 15 tools explicitly (see README "Tools to Include: All 15 tools").
-#   - Looking up customers (get_customer, list_customers)
-#   - Managing customer records (add_customer, update_customer)
-#   - Ticket operations (get_ticket, list_tickets, create_ticket,
-#     update_ticket_status, update_ticket_priority, delete_ticket)
-#   - Statistics and search (get_ticket_stats, get_customer_stats, search_tickets)
-#   - Admin operations (disable_customer, activate_customer)
-#
-# Hint:
-#   return McpToolset(
-#       connection_params=SseConnectionParams(url=MCP_SSE_URL),
-#       tool_filter=[...list of tool name strings...],
-#   )
 
 def create_customer_data_toolset() -> McpToolset:
     """Create an McpToolset for the Customer Data Agent.
@@ -90,38 +73,26 @@ def create_customer_data_toolset() -> McpToolset:
     Returns:
         McpToolset: Toolset with customer data tools
     """
-    raise NotImplementedError(
-        "TODO: Return McpToolset with tool_filter selecting customer data tools. "
-        "Use SseConnectionParams(url=MCP_SSE_URL) and a tool_filter list."
+    logger.info("[MCP_TOOLSET] Creating customer data toolset (all 15 tools)")
+    return McpToolset(
+        connection_params=SseConnectionParams(url=MCP_SSE_URL),
+        tool_filter=[
+            # Customer lookup / management
+            "get_customer", "list_customers", "add_customer", "update_customer",
+            # Admin operations
+            "disable_customer", "activate_customer",
+            # Ticket operations
+            "get_ticket", "list_tickets", "create_ticket",
+            "update_ticket_status", "update_ticket_priority", "delete_ticket",
+            # Statistics and search
+            "get_ticket_stats", "get_customer_stats", "search_tickets",
+        ],
     )
 
 
 # =============================================================================
-# TODO 2: Support Toolset
+# Support Toolset (support-safe: 10 tools, no admin/destructive ops)
 # =============================================================================
-# Create a toolset for the Support Agent with tool_filter selecting only
-# support-appropriate tools. The support agent should NOT have access to
-# destructive or admin operations.
-#
-# The support agent needs tools for:
-#   - Looking up customers (get_customer, list_customers)
-#   - Viewing tickets (get_ticket, list_tickets, search_tickets)
-#   - Creating/updating tickets (create_ticket, update_ticket_status,
-#     update_ticket_priority)
-#   - Statistics (get_ticket_stats, get_customer_stats)
-#
-# The support agent should NOT have:
-#   - disable_customer (admin only)
-#   - activate_customer (admin only)
-#   - delete_ticket (destructive)
-#   - add_customer (admin only)
-#   - update_customer (admin only)
-#
-# Hint:
-#   return McpToolset(
-#       connection_params=SseConnectionParams(url=MCP_SSE_URL),
-#       tool_filter=[...list of support-safe tool names...],
-#   )
 
 def create_support_toolset() -> McpToolset:
     """Create an McpToolset for the Support Agent.
@@ -133,8 +104,17 @@ def create_support_toolset() -> McpToolset:
     Returns:
         McpToolset: Toolset with support-safe tools only
     """
-    raise NotImplementedError(
-        "TODO: Return McpToolset with tool_filter selecting support-safe tools. "
-        "Exclude admin tools: disable_customer, activate_customer, delete_ticket, "
-        "add_customer, update_customer."
+    logger.info("[MCP_TOOLSET] Creating support toolset (10 support-safe tools)")
+    return McpToolset(
+        connection_params=SseConnectionParams(url=MCP_SSE_URL),
+        tool_filter=[
+            # Read-only customer lookup
+            "get_customer", "list_customers",
+            # Ticket viewing and search
+            "get_ticket", "list_tickets", "search_tickets",
+            # Safe ticket changes (create / status / priority)
+            "create_ticket", "update_ticket_status", "update_ticket_priority",
+            # Statistics
+            "get_ticket_stats", "get_customer_stats",
+        ],
     )

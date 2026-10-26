@@ -34,6 +34,9 @@ from shared.agents_config import (
     CUSTOMER_DATA_AGENT_URL,
     SUPPORT_AGENT_URL,
     HOST_AGENT_URL,
+    CUSTOMER_DATA_AGENT_PORT,
+    SUPPORT_AGENT_PORT,
+    HOST_AGENT_PORT,
 )
 
 # Import agent creation functions
@@ -43,149 +46,159 @@ from host_agent.agent import create_agent as create_host_agent
 
 
 # =============================================================================
-# TODO 1: Customer Data Agent Card
+# Customer Data Agent Card
 # =============================================================================
 
 def create_customer_data_agent_card() -> AgentCard:
-    """
-    Create AgentCard for Customer Data Agent.
+    """Create the A2A AgentCard for the Customer Data Agent.
 
-    TODO: Return an AgentCard with:
-      - name='Customer Data Agent'
-      - url=CUSTOMER_DATA_AGENT_URL
-      - description describing data management capabilities
-      - version='1.0'
-      - capabilities=AgentCapabilities(streaming=True)
-      - default_input_modes=['text/plain']
-      - default_output_modes=['application/json']
-      - preferred_transport=TransportProtocol.jsonrpc
-      - skills: at least one AgentSkill with relevant examples
-
-    Example AgentSkill:
-        AgentSkill(
-            id='manage_customer_data',
-            name='Manage Customer Data',
-            description='Access and manage customer information and tickets',
-            tags=['customers', 'tickets', 'data', 'database', 'mcp'],
-            examples=[
-                'Get customer information for ID 5',
-                'List all active customers',
-                'Show me all open tickets with high priority',
-            ],
-        )
+    Returns:
+        AgentCard: Card served at the agent's well-known URL, advertising
+        data-management and statistics skills (JSON output).
     """
-    raise NotImplementedError(
-        "TODO: Create AgentCard for Customer Data Agent. "
-        "See the docstring above for required fields."
+    return AgentCard(
+        name="Customer Data Agent",
+        url=CUSTOMER_DATA_AGENT_URL,
+        description=(
+            "Back-office data specialist with full MCP access to the customer "
+            "and ticket database: lookups, listing, ticket creation/updates, "
+            "admin account operations and statistics."
+        ),
+        version="1.0",
+        capabilities=AgentCapabilities(streaming=True),
+        default_input_modes=["text/plain"],
+        default_output_modes=["application/json"],
+        preferred_transport=TransportProtocol.jsonrpc,
+        skills=[
+            AgentSkill(
+                id="manage_customer_data",
+                name="Manage Customer Data",
+                description="Access and manage customer information and tickets",
+                tags=["customers", "tickets", "data", "database", "mcp"],
+                examples=[
+                    "Get customer information for ID 5",
+                    "List all active customers",
+                    "Show me all open tickets with high priority",
+                    "Create a ticket for customer 1 about login issues",
+                ],
+            ),
+            AgentSkill(
+                id="customer_statistics",
+                name="Customer and Ticket Statistics",
+                description="Report customer and ticket statistics and search tickets",
+                tags=["stats", "reporting", "search"],
+                examples=[
+                    "How many open tickets are there?",
+                    "Search tickets mentioning 'payment'",
+                ],
+            ),
+        ],
     )
 
 
 # =============================================================================
-# TODO 2: Support Agent Card
+# Support Agent Card
 # =============================================================================
 
 def create_support_agent_card() -> AgentCard:
-    """
-    Create AgentCard for Support Agent.
+    """Create the A2A AgentCard for the Support Agent.
 
-    TODO: Return an AgentCard with:
-      - name='Support Agent'
-      - url=SUPPORT_AGENT_URL
-      - description describing support capabilities
-      - version='1.0'
-      - capabilities=AgentCapabilities(streaming=True)
-      - default_input_modes=['text/plain']
-      - default_output_modes=['text/plain']
-      - preferred_transport=TransportProtocol.jsonrpc
-      - skills: at least one AgentSkill with support-related examples
-
-    Example AgentSkill:
-        AgentSkill(
-            id='provide_support',
-            name='Provide Customer Support',
-            description='Troubleshoot issues and provide solutions',
-            tags=['support', 'troubleshooting', 'solutions', 'help'],
-            examples=[
-                "I can't login to my account",
-                'How do I reset my password?',
-                'My payment failed, what should I do?',
-            ],
-        )
+    Returns:
+        AgentCard: Card advertising troubleshooting/support skills.
     """
-    raise NotImplementedError(
-        "TODO: Create AgentCard for Support Agent. "
-        "See the docstring above for required fields."
+    return AgentCard(
+        name="Support Agent",
+        url=SUPPORT_AGENT_URL,
+        description=(
+            "Customer support specialist with a troubleshooting knowledge base "
+            "(login, password, billing, performance, data export) and "
+            "support-safe MCP tools for looking up customers and managing tickets."
+        ),
+        version="1.0",
+        capabilities=AgentCapabilities(streaming=True),
+        default_input_modes=["text/plain"],
+        default_output_modes=["text/plain"],
+        preferred_transport=TransportProtocol.jsonrpc,
+        skills=[
+            AgentSkill(
+                id="provide_support",
+                name="Provide Customer Support",
+                description="Troubleshoot issues and provide solutions",
+                tags=["support", "troubleshooting", "solutions", "help"],
+                examples=[
+                    "I can't login to my account",
+                    "How do I reset my password?",
+                    "My payment failed, what should I do?",
+                    "The dashboard is very slow to load",
+                ],
+            ),
+        ],
     )
 
 
 # =============================================================================
-# TODO 3: Host Agent Card
+# Host Agent Card
 # =============================================================================
 
 def create_host_agent_card() -> AgentCard:
-    """
-    Create AgentCard for Host Agent (Orchestrator).
+    """Create the A2A AgentCard for the Host (orchestrator) Agent.
 
-    TODO: Return an AgentCard with:
-      - name='Customer Support Host Agent'
-      - url=HOST_AGENT_URL
-      - description describing orchestration capabilities
-      - version='1.0'
-      - capabilities=AgentCapabilities(streaming=True)
-      - default_input_modes=['text/plain']
-      - default_output_modes=['text/plain']
-      - preferred_transport=TransportProtocol.jsonrpc
-      - skills: at least one AgentSkill describing comprehensive support
-
-    Example AgentSkill:
-        AgentSkill(
-            id='comprehensive_support',
-            name='Comprehensive Customer Support',
-            description='Provides complete support by combining data access and solutions',
-            tags=['orchestration', 'support', 'data', 'coordination'],
-            examples=[
-                "I'm having login issues, can you check my account?",
-                'Show me my open tickets and help resolve them',
-            ],
-        )
+    Returns:
+        AgentCard: Card advertising the comprehensive support skill.
     """
-    raise NotImplementedError(
-        "TODO: Create AgentCard for Host Agent. "
-        "See the docstring above for required fields."
+    return AgentCard(
+        name="Customer Support Host Agent",
+        url=HOST_AGENT_URL,
+        description=(
+            "Orchestrator that delegates over A2A: first the Customer Data Agent "
+            "looks up account and ticket data, then the Support Agent provides "
+            "troubleshooting guidance and ticket actions."
+        ),
+        version="1.0",
+        capabilities=AgentCapabilities(streaming=True),
+        default_input_modes=["text/plain"],
+        default_output_modes=["text/plain"],
+        preferred_transport=TransportProtocol.jsonrpc,
+        skills=[
+            AgentSkill(
+                id="comprehensive_support",
+                name="Comprehensive Customer Support",
+                description="Provides complete support by combining data access and solutions",
+                tags=["orchestration", "support", "data", "coordination"],
+                examples=[
+                    "I'm having login issues, can you check my account?",
+                    "Show me my open tickets and help resolve them",
+                    "Check account 5 and create a ticket for billing issues",
+                ],
+            ),
+        ],
     )
 
 
 # =============================================================================
-# TODO 4: Factory Function
+# Factory Function
 # =============================================================================
 
 def create_all_agents():
-    """
-    Create all agents for the customer support system.
-
-    TODO: Create all agents and their cards, return a dictionary with:
-      {
-          'customer_data': {
-              'agent': <Agent from create_customer_data_agent()>,
-              'card': <AgentCard from create_customer_data_agent_card()>,
-              'port': 10020,
-          },
-          'support': {
-              'agent': <Agent from create_support_agent()>,
-              'card': <AgentCard from create_support_agent_card()>,
-              'port': 10021,
-          },
-          'host': {
-              'agent': <Agent from create_host_agent()>,
-              'card': <AgentCard from create_host_agent_card()>,
-              'port': 10022,
-          },
-      }
+    """Create all agents and their AgentCards for the support system.
 
     Returns:
-        Dictionary with all agents and their cards
+        dict: ``{"customer_data" | "support" | "host": {"agent", "card", "port"}}``.
     """
-    raise NotImplementedError(
-        "TODO: Create all agents and agent cards, return them in a dictionary. "
-        "See the docstring above for the expected structure."
-    )
+    return {
+        "customer_data": {
+            "agent": create_customer_data_agent(),
+            "card": create_customer_data_agent_card(),
+            "port": CUSTOMER_DATA_AGENT_PORT,
+        },
+        "support": {
+            "agent": create_support_agent(),
+            "card": create_support_agent_card(),
+            "port": SUPPORT_AGENT_PORT,
+        },
+        "host": {
+            "agent": create_host_agent(),
+            "card": create_host_agent_card(),
+            "port": HOST_AGENT_PORT,
+        },
+    }
