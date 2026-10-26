@@ -63,9 +63,13 @@ Query: "I'm having login issues, can you check my account 5 and help?" Measured 
 
 | Mode | Agents Called | Latency | Context Passing |
 |------|-------------|---------|-----------------|
-| Basic (Sequential) | Data → Support | ___ s | Support sees data agent's reply in session history |
-| Advanced (Dynamic) | Router → only needed agents | ___ s | Routing decision in state; skipped agents return a note |
-| Parallel | Data ‖ Support → Synthesizer | ___ s | Outputs saved to state keys via after_agent_callback |
+| Basic (Sequential) | Data → Support | **64.5 s** (full answer: customer 5 looked up, login ticket #26 created) | Support sees data agent's reply in session history |
+| Advanced (Dynamic) | Router (`sequential`) → Data → Support | 9.6 s* | Routing decision in state; skipped agents return a note |
+| Parallel | Data ‖ Support → Synthesizer | n/a* | Outputs saved to state keys via after_agent_callback |
+
+\*Run on 2026-10-25 with `gemini-3.5-flash` (the default `gemini-3.8-flash` returned `503 UNAVAILABLE – high demand`). The basic run completed end to end. The advanced and parallel runs started right after it and hit the Gemini **free-tier limit of 5 requests/minute/model** (`429 RESOURCE_EXHAUSTED`): in advanced mode the router correctly chose `sequential` and dispatched both A2A agents, but their LLM calls were rejected, so 9.6 s is not a valid end-to-end latency; parallel mode was rejected immediately. `measure_latency.py` now waits 65 s between modes. Expected result with sufficient quota: parallel ≈ max(data, support) + synthesis, i.e. lower than sequential; advanced saves a full agent call on single-intent queries (e.g. "Get customer 5 info" → `data_only`).
+
+**Error-handling lesson:** both 503 (overload) and 429 (quota) surfaced as A2A task failures; production code should add retry with backoff and fall back to a second model.
 
 ---
 
