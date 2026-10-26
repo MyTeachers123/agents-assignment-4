@@ -59,7 +59,7 @@
 
 ### Mode Comparison
 
-Query: "I'm having login issues, can you check my account 5 and help?" Measured with a stopwatch / ADK Web event timestamps (first request to final response).
+Query: "I'm having login issues, can you check my account 5 and help?" Measured with `measure_latency.py` (repo root): each mode's orchestrator runs in an ADK `InMemoryRunner` against the live A2A agents, timed with `time.perf_counter()` from sending the query to the final event. One run per mode.
 
 | Mode | Agents Called | Latency | Context Passing |
 |------|-------------|---------|-----------------|
